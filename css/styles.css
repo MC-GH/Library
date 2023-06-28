@@ -1,18 +1,37 @@
+:root {
+    /*place common colors, paddings,.. here*/
+    --light-green: #55efc4;
+    --faded-green: #81ecec;
+    --blue: #74b9ff;
+    --purple: #a29bfe;
+    --light-grey: #dfe6e9;
+    --dark-grey: #b2bec3;
+    --dark-green: #00b894;
+    --faded-blue: #00cec9;
+    --dark-blue: #0984e3;
+    --dark-purple: #6c5ce7;
+
+
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family:'Ysabeau Infant', sans-serif;
 }
 
 body {
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-#container {
-    min-width: 300px;
-    min-height: 300px;
-    border: 1px solid black;
+header {
+    font-size: 35px;
+    font-weight: bold;
+    padding: 1.5rem;
+    background-color: var(--light-grey);
+    color: var(--dark-blue);
+    text-shadow: 1px 2px 2px var(--dark-grey);
+    border-bottom: 2px inset var(--blue);
+    box-shadow: 5px 5px 15px var(--light-grey);
 }
