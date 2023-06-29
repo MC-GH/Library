@@ -19,3 +19,5 @@ console.log(book1.info());
 
 const book2 = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
 console.log(book2.info());
+
+

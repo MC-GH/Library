@@ -26,12 +26,39 @@ body {
 }
 
 header {
-    font-size: 35px;
+    font-size: 45px;
     font-weight: bold;
-    padding: 1.5rem;
-    background-color: var(--light-grey);
-    color: var(--dark-blue);
-    text-shadow: 1px 2px 2px var(--dark-grey);
-    border-bottom: 2px inset var(--blue);
+    padding: 1rem;
+    background-color: var(--dark-green);
+    color: white;
+    font-variant:small-caps;
+    border-bottom: 2px inset rgb(29, 151, 37);
     box-shadow: 5px 5px 15px var(--light-grey);
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.card {
+    min-width: 250px;
+    padding: 2rem;
+    border: 1px solid var(--dark-green);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.card p, .card button {
+    margin: .5rem;
+}
+
+button {
+    width: 100px;
+    padding: .3rem;
 }
