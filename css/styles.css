@@ -34,6 +34,43 @@ header {
     font-variant:small-caps;
     border-bottom: 2px inset rgb(29, 151, 37);
     box-shadow: 5px 5px 15px var(--light-grey);
+    display: flex;
+    justify-content: space-between;
+}
+
+#modal {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: calc(50% - 200px);
+    left: calc(50% - 175px);
+    min-height: 400px;
+    min-width: 350px;
+    border: 3px solid var(--dark-green);
+    border-radius: 5px;
+    padding: 1rem;
+    background-color: var(--light-grey);
+    box-shadow: 0 0 0 50vmax rgba(0,0,0,.5);
+}
+
+#closeButton {
+    font-size: 40px;
+    color: var(--dark-green);
+    font-weight: bolder;
+    position: absolute;
+    right: 20px;
+    top: 0px;
+}
+
+#closeButton:hover {
+    color: red;
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+form label, button {
+    display: block;
 }
 
 main {

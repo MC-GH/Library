@@ -11,7 +11,24 @@
     <title>Library app</title>
 </head>
 <body>
-    <header>Library</header>
+    <header>
+        <p>Library</p>
+        <button id="addBook">Add book +</button>
+    </header>
+    <div id="modal">
+        <span id="closeButton">x</span>
+        <form>
+            <label for="bookName">Book name: </label>
+            <input type="text" id="bookName" name="bookName">
+            <label for="authorName">Author name: </label>
+            <input type="text" id="authorName" name="authorName">
+            <label for="nrPages">Number of pages: </label>
+            <input type="number" id="nrPages" name="nrPages">
+            <label for="read">Read?</label>
+            <input type="radio" id="read" name="read">
+            <button type="button" id="addBook">Add to list</button>
+        </form>
+    </div>
     <main>
         <div class="card">
             <p>Title</p>
