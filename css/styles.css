@@ -73,6 +73,11 @@ form label, button {
     display: block;
 }
 
+#error {
+    color: red;
+    display: none;
+}
+
 main {
     display: flex;
     align-items: center;
@@ -91,8 +96,9 @@ main {
     text-align: center;
 }
 
+/*center the buttons*/
 .card p, .card button {
-    margin: .5rem;
+    margin: 0.5rem auto;
 }
 
 button {
