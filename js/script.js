@@ -2,15 +2,15 @@ const ADDBOOKBUTTON = document.querySelector("#addBook");
 const BOOKMODAL = document.querySelector("#modal");
 ADDBOOKBUTTON.addEventListener('click', openModal);
 
-
-
 //Global scope so the value can be changed on each click
-const READ = document.querySelector('#read');
-READ.addEventListener('click', () => {
-    if(READ.value === 'false') {
-        READ.value = 'true';
+const READCHECKBOX = document.querySelector('#read');
+READCHECKBOX.addEventListener('click', () => {
+    if(READCHECKBOX.value === 'false') {
+        READCHECKBOX.value = 'true';
+        console.log(READCHECKBOX.value);
     } else {
-        READ.value = 'false';
+        READCHECKBOX.value = 'false';
+        console.log(READCHECKBOX.value);
     }
 })
 
@@ -50,7 +50,6 @@ function openModal() {
 
 function closeModal() {
     BOOKMODAL.style.display = '';
-
 }
 
 //Create Book object based on userinput
@@ -58,9 +57,9 @@ function createNewBook() {
     const BOOKNAME = document.querySelector('#bookName');
     const AUTHORNAME = document.querySelector('#authorName');
     const PAGES = document.querySelector('#nrPages');
-    console.log(PAGES.VALUE);
-    console.log(BOOKNAME.VALUE);
-    console.log(AUTHORNAME.VALUE);
+    console.log(PAGES.value);
+    console.log(BOOKNAME.value);
+    console.log(AUTHORNAME.value);
     
     //if all fields have a value. (will return true if there is one)
     if(BOOKNAME.value && AUTHORNAME.value && PAGES.value) {
@@ -81,14 +80,70 @@ function createNewBook() {
     }
 }
 
-function addBookToLibrary(book) {
+function addBookToLibrary(newBook) {
     //Add the newly created book (based on userInput) to the array
     //loop through the Array, and display each Book object on the page
-    myLibrary.push(book);
-    console.log("Current books in library: ");
-    myLibrary.forEach(book => {
-        console.log(book.info());
-    });
+    
+    //At the start, the library is empty so function does not execute.
+    if(myLibrary.length === 0) {
+        myLibrary.push(newBook);
+        console.log("Book added.")
+        createCard(newBook);
+    } else {
+        myLibrary.forEach(book => {
+            if(book.title === newBook.title) {
+                console.log("Book already in collection.");
+            } else {
+                console.log("Not yet in library.");
+                myLibrary.push(newBook);
+                createCard(newBook);
+            }
+        });
+    }
 }
+
+function createCard(book) {
+    const CARD = document.createElement('div');
+    CARD.classList.add('card');
+    
+    const TITLE = document.createElement('p');
+    TITLE.classList.add('title');
+    TITLE.textContent = book.title;
+
+    const AUTHOR = document.createElement('p');
+    AUTHOR.classList.add('author');
+    AUTHOR.textContent = book.author;
+
+    const PAGES = document.createElement('p');
+    PAGES.classList.add('pages');
+    PAGES.textContent = book.pages;
+
+    const READBUTTON = document.createElement('button');
+    READBUTTON.classList.add('read');
+    if(book.read === 'true') {
+        READBUTTON.textContent = 'Read';
+    } else {
+        READBUTTON.textContent = 'Not Read';
+    }
+
+    const REMOVEBUTTON = document.createElement('button');
+    REMOVEBUTTON.textContent = 'Remove';
+
+    CARD.appendChild(TITLE);
+    CARD.appendChild(AUTHOR);
+    CARD.appendChild(PAGES);
+    CARD.appendChild(READBUTTON);
+    CARD.appendChild(REMOVEBUTTON);
+
+    const COLLECTION = document.querySelector('#bookCollection'); 
+    COLLECTION.appendChild(CARD);
+}
+
+function changeReadStatus() {
+
+}
+
+addBookToLibrary(new Book("The Hobbit", "JRR Tolkien", 782, 'true'));
+
 
 
