@@ -125,9 +125,18 @@ function createCard(book) {
     } else {
         READBUTTON.textContent = 'Not Read';
     }
+    //Add event listener on READBUTTON, pass book object and button to function changeReadStatus
+    //This will both update the Object value as well as visual display of button
+    READBUTTON.addEventListener('click', () => {
+        changeReadStatus(book, READBUTTON);
+    })
 
     const REMOVEBUTTON = document.createElement('button');
     REMOVEBUTTON.textContent = 'Remove';
+
+    REMOVEBUTTON.addEventListener('click', () => {
+        removeBook(book);
+    })
 
     CARD.appendChild(TITLE);
     CARD.appendChild(AUTHOR);
@@ -139,11 +148,24 @@ function createCard(book) {
     COLLECTION.appendChild(CARD);
 }
 
-function changeReadStatus() {
-
+function changeReadStatus(book, readButton) {
+    book.read = !book.read;
+    readButton.textContent = book.read ? 'Read' : 'Not Read';
 }
 
-addBookToLibrary(new Book("The Hobbit", "JRR Tolkien", 782, 'true'));
+function removeBook(bookToDelete) {
+    for(let i = 0; i < myLibrary.length; i++) {
+        if(myLibrary[i].title === bookToDelete.title) {
+            //splice allows you to pass the index of which you want to remove the item, + the amount of items
+            myLibrary.splice(i,1);
+            console.log(bookToDelete.title + " has been removed");
+        }
+    }
+}
+    //Also remove the card => Still to do
 
+
+let book1 = new Book("The Hobbit", "JRR Tolkien", 782, 'true')
+addBookToLibrary(book1);
 
 
