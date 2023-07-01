@@ -88,6 +88,11 @@ main {
     padding: 2rem;
 }
 
+#bookCollection {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .card {
     min-width: 250px;
     padding: 2rem;

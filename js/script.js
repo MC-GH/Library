@@ -1,25 +1,20 @@
 const ADDBOOKBUTTON = document.querySelector("#addBook");
-const BOOKMODAL = document.querySelector("#modal");
 ADDBOOKBUTTON.addEventListener('click', openModal);
 
 //Global scope so the value can be changed on each click
 const READCHECKBOX = document.querySelector('#read');
 READCHECKBOX.addEventListener('click', () => {
-    if(READCHECKBOX.value === "false") {
-        READCHECKBOX.value = "true";
-        console.log(READCHECKBOX.value);
+    if(!READCHECKBOX.checked) {
+        READCHECKBOX.checked;
         console.log("test output of checked attribute:" + READCHECKBOX.checked)
     } else {
-        READCHECKBOX.value = "false";
-        console.log(READCHECKBOX.value);
+        !READCHECKBOX.checked;
         console.log("test output of checked attribute:" + READCHECKBOX.checked)
     }
 })
 
-//==>Refactor above code with the .checked attribute instead of using values.
-//=> much simpler
-
 let myLibrary = [];
+setUpEventHandlers();
 
 //Book object constructor
 function Book(title, author, pages, read) {
@@ -37,79 +32,136 @@ function Book(title, author, pages, read) {
     }
 }
 
+
+    // function closeButtonClickHandler(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
+    //     closeModal(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
+    // }
+
+    // function addButtonClickHandler(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
+    //     createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
+    // }
+
+
 function openModal() {
+    const BOOKNAME = document.querySelector('#bookName');
+    const AUTHORNAME = document.querySelector('#authorName');
+    const PAGES = document.querySelector('#nrPages');
+    const READCHECKBOX = document.querySelector('#read');
+    const ERRORMESSAGE = document.querySelector('#error');
+    resetModalInput(BOOKNAME,AUTHORNAME,PAGES,READCHECKBOX,ERRORMESSAGE);
+
+    const BOOKMODAL = document.querySelector("#modal");
     if(BOOKMODAL.style.display === '') {
         BOOKMODAL.style.display = 'block';
     } else {
         BOOKMODAL.style.display = '';
     }
+    // //Remove existing Event listener every time the modal is opened
+    // const CLOSEBUTTON = document.querySelector('#closeButton');
+    // CLOSEBUTTON.removeEventListener('click', closeButtonEventHandler);
+    // CLOSEBUTTON.addEventListener('click', closeButtonEventHandler);
 
-    const CLOSEBUTTON = document.querySelector('#closeButton');
-    CLOSEBUTTON.addEventListener('click', closeModal);  
+    // //Remove existing Event listener every time the modal is opened
+    // const ADDBUTTON = document.querySelector('#addButton');
+    // ADDBUTTON.removeEventListener('click', addButtonEventHandler);
+    // ADDBUTTON.addEventListener('click', addButtonEventHandler);
 
-    const ADDBUTTON = document.querySelector('#addButton');
-    ADDBUTTON.addEventListener('click', () => {
-     createNewBook();
-    })
+    // function addButtonEventHandler() {
+    //     createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
+    // }
+
+    // function closeButtonEventHandler() {
+    //     closeModal(BOOKMODAL);
+    // }
 }
 
-function closeModal() {
+function setUpEventHandlers() {
+
+    const BOOKNAME = document.querySelector('#bookName');
+    const AUTHORNAME = document.querySelector('#authorName');
+    const PAGES = document.querySelector('#nrPages');
+    const READCHECKBOX = document.querySelector('#read');
+    const ERRORMESSAGE = document.querySelector('#error');
+    const BOOKMODAL = document.querySelector("#modal");
+
+        //Remove existing Event listener every time the modal is opened
+        const CLOSEBUTTON = document.querySelector('#closeButton');
+        CLOSEBUTTON.removeEventListener('click', closeButtonEventHandler);
+        CLOSEBUTTON.addEventListener('click', closeButtonEventHandler);
+    
+        //Remove existing Event listener every time the modal is opened
+        const ADDBUTTON = document.querySelector('#addButton');
+        ADDBUTTON.removeEventListener('click', addButtonEventHandler);
+        ADDBUTTON.addEventListener('click', addButtonEventHandler);
+    
+        function addButtonEventHandler() {
+            createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
+        }
+    
+        function closeButtonEventHandler() {
+            closeModal(BOOKMODAL);
+        }
+}
+
+//Issue with arrow function event listeners. 
+
+function closeModal(BOOKMODAL) {
     BOOKMODAL.style.display = '';
 }
 
 //Create Book object based on userinput
-function createNewBook() {
-    const BOOKNAME = document.querySelector('#bookName');
-    const AUTHORNAME = document.querySelector('#authorName');
-    const PAGES = document.querySelector('#nrPages');
-    const READ = document.querySelector('#read');
-    const ERRORMESSAGE = document.querySelector('#error');
-    console.log(PAGES.value);
-    console.log(BOOKNAME.value);
-    console.log(AUTHORNAME.value);
-    console.log(READ.value);
-    
+function createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
     //if all fields have a value. (will return true if there is one)
     if(BOOKNAME.value && AUTHORNAME.value && PAGES.value) {
-        let book = new Book(BOOKNAME.value, AUTHORNAME.value, PAGES.value, READ.value);
+        let book = new Book(BOOKNAME.value, AUTHORNAME.value, PAGES.value, READCHECKBOX.checked);
         addBookToLibrary(book);
-        resetInput();
-        closeModal();
+        closeModal(BOOKMODAL);
     } else {
         ERRORMESSAGE.style.display = 'block';
     }
-
-    function resetInput() {
-        BOOKNAME.value = '';
-        AUTHORNAME.value = '';
-        PAGES.value = '';
-        READ.value = "false";
-        ERRORMESSAGE.style.display = '';
-        //Issue => Read checkbox not being reset + ERROR not being cleared!
-        //Checkbox now always on false
-    }
 }
+
+function resetModalInput(BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
+    BOOKNAME.value = '';
+    AUTHORNAME.value = '';
+    PAGES.value = '';
+    READCHECKBOX.checked = false;
+    console.log("reset function triggered");
+    ERRORMESSAGE.style.display = 'none';
+} 
 
 function addBookToLibrary(newBook) {
     //Add the newly created book (based on userInput) to the array
     //loop through the Array, and display each Book object on the page
     
-    //At the start, the library is empty so function does not execute.
-    if(myLibrary.length === 0) {
-        myLibrary.push(newBook);
-        console.log("Book added.")
-        createCard(newBook);
+    //If library is empty, add the book immediately
+    // if(myLibrary.length === 0) {
+    //     myLibrary.push(newBook);
+    //     console.log("Book added.")
+    //     createCard(newBook);
+    //     return;
+    // }
+    // for(let i = 0; i < myLibrary.length; i++) {
+    //     if(myLibrary[i].title === newBook.title) {
+    //         console.log("Book already in collection.");
+    //         return;
+    //     }
+    // }
+
+    const isBookInLibrary = myLibrary.some(book => book.title === newBook.title);
+    console.log("value that checks if book is already in array: " + isBookInLibrary);
+    
+    if(isBookInLibrary) {
+        console.log("Book already in collection.");
     } else {
-        myLibrary.forEach(book => {
-            if(book.title === newBook.title) {
-                console.log("Book already in collection.");
-            } else {
-                console.log("Not yet in library.");
-                myLibrary.push(newBook);
-                createCard(newBook);
-            }
-        });
+        myLibrary.push(newBook);
+        createCard(newBook);
+        console.log("Book added to array");
     }
+
+    // myLibrary.push(newBook);
+    // createCard(newBook);
+    // console.log("Book added to array");
 }
 
 function createCard(book) {
@@ -129,8 +181,8 @@ function createCard(book) {
     PAGES.textContent = book.pages;
 
     const READBUTTON = document.createElement('button');
-    READBUTTON.classList.add('read');
-    if(book.read === "true") {
+    READBUTTON.classList.add('readButton');
+    if(book.read === true) {
         READBUTTON.textContent = 'Read';
     } else {
         READBUTTON.textContent = 'Not Read';
@@ -175,7 +227,10 @@ function removeBook(bookToDelete) {
     //Also remove the card => Still to do
 
 
-let book1 = new Book("The Hobbit", "JRR Tolkien", 782, "true")
-addBookToLibrary(book1);
+// let book1 = new Book("The Hobbit", "JRR Tolkien", 782, true)
+// addBookToLibrary(book1);
 
 
+
+// addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
+// addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
