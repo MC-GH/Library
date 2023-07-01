@@ -5,14 +5,19 @@ ADDBOOKBUTTON.addEventListener('click', openModal);
 //Global scope so the value can be changed on each click
 const READCHECKBOX = document.querySelector('#read');
 READCHECKBOX.addEventListener('click', () => {
-    if(READCHECKBOX.value === 'false') {
-        READCHECKBOX.value = 'true';
+    if(READCHECKBOX.value === "false") {
+        READCHECKBOX.value = "true";
         console.log(READCHECKBOX.value);
+        console.log("test output of checked attribute:" + READCHECKBOX.checked)
     } else {
-        READCHECKBOX.value = 'false';
+        READCHECKBOX.value = "false";
         console.log(READCHECKBOX.value);
+        console.log("test output of checked attribute:" + READCHECKBOX.checked)
     }
 })
+
+//==>Refactor above code with the .checked attribute instead of using values.
+//=> much simpler
 
 let myLibrary = [];
 
@@ -57,9 +62,12 @@ function createNewBook() {
     const BOOKNAME = document.querySelector('#bookName');
     const AUTHORNAME = document.querySelector('#authorName');
     const PAGES = document.querySelector('#nrPages');
+    const READ = document.querySelector('#read');
+    const ERRORMESSAGE = document.querySelector('#error');
     console.log(PAGES.value);
     console.log(BOOKNAME.value);
     console.log(AUTHORNAME.value);
+    console.log(READ.value);
     
     //if all fields have a value. (will return true if there is one)
     if(BOOKNAME.value && AUTHORNAME.value && PAGES.value) {
@@ -68,7 +76,6 @@ function createNewBook() {
         resetInput();
         closeModal();
     } else {
-        const ERRORMESSAGE = document.querySelector('#error');
         ERRORMESSAGE.style.display = 'block';
     }
 
@@ -76,7 +83,10 @@ function createNewBook() {
         BOOKNAME.value = '';
         AUTHORNAME.value = '';
         PAGES.value = '';
-        READ.value = '';
+        READ.value = "false";
+        ERRORMESSAGE.style.display = '';
+        //Issue => Read checkbox not being reset + ERROR not being cleared!
+        //Checkbox now always on false
     }
 }
 
@@ -120,7 +130,7 @@ function createCard(book) {
 
     const READBUTTON = document.createElement('button');
     READBUTTON.classList.add('read');
-    if(book.read === 'true') {
+    if(book.read === "true") {
         READBUTTON.textContent = 'Read';
     } else {
         READBUTTON.textContent = 'Not Read';
@@ -165,7 +175,7 @@ function removeBook(bookToDelete) {
     //Also remove the card => Still to do
 
 
-let book1 = new Book("The Hobbit", "JRR Tolkien", 782, 'true')
+let book1 = new Book("The Hobbit", "JRR Tolkien", 782, "true")
 addBookToLibrary(book1);
 
 
