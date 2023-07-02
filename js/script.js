@@ -32,16 +32,6 @@ function Book(title, author, pages, read) {
     }
 }
 
-
-    // function closeButtonClickHandler(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
-    //     closeModal(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
-    // }
-
-    // function addButtonClickHandler(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
-    //     createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
-    // }
-
-
 function openModal() {
     const BOOKNAME = document.querySelector('#bookName');
     const AUTHORNAME = document.querySelector('#authorName');
@@ -56,23 +46,6 @@ function openModal() {
     } else {
         BOOKMODAL.style.display = '';
     }
-    // //Remove existing Event listener every time the modal is opened
-    // const CLOSEBUTTON = document.querySelector('#closeButton');
-    // CLOSEBUTTON.removeEventListener('click', closeButtonEventHandler);
-    // CLOSEBUTTON.addEventListener('click', closeButtonEventHandler);
-
-    // //Remove existing Event listener every time the modal is opened
-    // const ADDBUTTON = document.querySelector('#addButton');
-    // ADDBUTTON.removeEventListener('click', addButtonEventHandler);
-    // ADDBUTTON.addEventListener('click', addButtonEventHandler);
-
-    // function addButtonEventHandler() {
-    //     createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
-    // }
-
-    // function closeButtonEventHandler() {
-    //     closeModal(BOOKMODAL);
-    // }
 }
 
 function setUpEventHandlers() {
@@ -133,20 +106,6 @@ function resetModalInput(BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE
 function addBookToLibrary(newBook) {
     //Add the newly created book (based on userInput) to the array
     //loop through the Array, and display each Book object on the page
-    
-    //If library is empty, add the book immediately
-    // if(myLibrary.length === 0) {
-    //     myLibrary.push(newBook);
-    //     console.log("Book added.")
-    //     createCard(newBook);
-    //     return;
-    // }
-    // for(let i = 0; i < myLibrary.length; i++) {
-    //     if(myLibrary[i].title === newBook.title) {
-    //         console.log("Book already in collection.");
-    //         return;
-    //     }
-    // }
 
     const isBookInLibrary = myLibrary.some(book => book.title === newBook.title);
     console.log("value that checks if book is already in array: " + isBookInLibrary);
@@ -158,11 +117,14 @@ function addBookToLibrary(newBook) {
         createCard(newBook);
         console.log("Book added to array");
     }
-
-    // myLibrary.push(newBook);
-    // createCard(newBook);
-    // console.log("Book added to array");
 }
+
+//Possible improvements:
+//-create a "parent" function that creates the cards while looping through the array of objects
+//-store the index of the object in the array as data-attribute in the HTML element
+//-whenever an element is removed, call this parent function again as it means indexes have shifted (so data-attributes have to be updated), make sure all existing elements are removed
+//-instead of hard-coding the modal in the HTML, have it injected via javascript
+
 
 function createCard(book) {
     const CARD = document.createElement('div');
@@ -197,7 +159,7 @@ function createCard(book) {
     REMOVEBUTTON.textContent = 'Remove';
 
     REMOVEBUTTON.addEventListener('click', () => {
-        removeBook(book);
+        removeBook(book, REMOVEBUTTON );
     })
 
     CARD.appendChild(TITLE);
@@ -215,10 +177,11 @@ function changeReadStatus(book, readButton) {
     readButton.textContent = book.read ? 'Read' : 'Not Read';
 }
 
-function removeBook(bookToDelete) {
+function removeBook(bookToDelete, deleteButton) {
     for(let i = 0; i < myLibrary.length; i++) {
         if(myLibrary[i].title === bookToDelete.title) {
             //splice allows you to pass the index of which you want to remove the item, + the amount of items
+            deleteButton.parentElement.remove();
             myLibrary.splice(i,1);
             console.log(bookToDelete.title + " has been removed");
         }
@@ -232,5 +195,5 @@ function removeBook(bookToDelete) {
 
 
 
-// addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
-// addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
+addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
+addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
