@@ -119,12 +119,13 @@ function addBookToLibrary(newBook) {
     }
 }
 
+
+
 //Possible improvements:
 //-create a "parent" function that creates the cards while looping through the array of objects
 //-store the index of the object in the array as data-attribute in the HTML element
 //-whenever an element is removed, call this parent function again as it means indexes have shifted (so data-attributes have to be updated), make sure all existing elements are removed
 //-instead of hard-coding the modal in the HTML, have it injected via javascript
-
 
 function createCard(book) {
     const CARD = document.createElement('div');
@@ -187,13 +188,6 @@ function removeBook(bookToDelete, deleteButton) {
         }
     }
 }
-    //Also remove the card => Still to do
-
-
-// let book1 = new Book("The Hobbit", "JRR Tolkien", 782, true)
-// addBookToLibrary(book1);
-
-
 
 addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
 addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
