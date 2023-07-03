@@ -16,6 +16,12 @@ READCHECKBOX.addEventListener('click', () => {
 let myLibrary = [];
 setUpEventHandlers();
 
+addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
+addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
+addBookToLibrary(new Book("How to train your dragon", "JRR T", 99, true));
+addBookToLibrary(new Book("Javascript for Dummies", "Bob", 875, false));
+generateCards();
+
 //Book object constructor
 function Book(title, author, pages, read) {
     this.title = title;
@@ -49,7 +55,6 @@ function openModal() {
 }
 
 function setUpEventHandlers() {
-
     const BOOKNAME = document.querySelector('#bookName');
     const AUTHORNAME = document.querySelector('#authorName');
     const PAGES = document.querySelector('#nrPages');
@@ -114,12 +119,16 @@ function addBookToLibrary(newBook) {
         console.log("Book already in collection.");
     } else {
         myLibrary.push(newBook);
-        createCard(newBook);
+        // createCard(newBook);
         console.log("Book added to array");
     }
 }
 
 
+//Only to be called when altering the indexes: i.e. removing a book
+function generateCards() {
+    myLibrary.forEach(book => createCard(book));
+}
 
 //Possible improvements:
 //-create a "parent" function that creates the cards while looping through the array of objects
@@ -128,6 +137,9 @@ function addBookToLibrary(newBook) {
 //-instead of hard-coding the modal in the HTML, have it injected via javascript
 
 function createCard(book) {
+    const INDEX = myLibrary.indexOf(book);
+    console.log(book.title + " can be found at index: " + INDEX);
+
     const CARD = document.createElement('div');
     CARD.classList.add('card');
     
@@ -189,5 +201,4 @@ function removeBook(bookToDelete, deleteButton) {
     }
 }
 
-addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
-addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
+
