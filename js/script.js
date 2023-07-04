@@ -12,7 +12,6 @@ addBookToLibrary(new Book("Javascript for Dummies", "Bob", 875, false));
 addBookToLibrary(new Book("The Wizard of Larry", "Tom", 78, false));
 addBookToLibrary(new Book("How to train your dog", "JRR T", 99, true));
 addBookToLibrary(new Book("Javascript for Pros", "Bob", 875, false));
-generateCards();
 
 //Book object constructor
 function Book(title, author, pages, read) {
@@ -38,6 +37,11 @@ function Book(title, author, pages, read) {
 
 function createModal() {
     const HTMLBODY = document.querySelector('body');
+
+    const MODALBACKGROUND = document.createElement('div');
+    MODALBACKGROUND.setAttribute('id', "modalBackground");
+    HTMLBODY.appendChild(MODALBACKGROUND);
+
     const MODALDIV = document.createElement('div');
     MODALDIV.setAttribute('id',"modal");
     HTMLBODY.appendChild(MODALDIV);
@@ -105,18 +109,14 @@ function createModal() {
     ERRORMESSAGE.setAttribute('id', "error");
     ERRORMESSAGE.textContent = "Please fill in all fields before submitting a book.";
     FORM.appendChild(ERRORMESSAGE);
-
 }
-
 
 function openModal() {
     createModal();
     setUpEventHandlers();
-
 }
 
 function setUpEventHandlers() {
-    console.log("SetUpEventHandler function triggered")
     const BOOKNAME = document.querySelector('#bookName');
     const AUTHORNAME = document.querySelector('#authorName');
     const PAGES = document.querySelector('#nrPages');
@@ -140,7 +140,6 @@ function setUpEventHandlers() {
     
         function addButtonEventHandler() {
             createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
-            generateCards();
         }
     
         function closeButtonEventHandler() {
@@ -158,10 +157,10 @@ function setUpEventHandlers() {
         }
 }
 
-//Create a function to remove the cards (before regenerating)
-
 function closeModal(BOOKMODAL) {
     BOOKMODAL.remove();
+    const MODALBG = document.querySelector('#modalBackground');
+    MODALBG.remove();
 }
 
 //Create Book object based on userinput
@@ -197,11 +196,10 @@ function addBookToLibrary(newBook) {
         console.log("Book already in collection.");
     } else {
         myLibrary.push(newBook);
-        // createCard(newBook);
+        createCard(newBook);
         console.log("Book added to array");
     }
 }
-
 
 //Only to be called when altering the indexes: i.e. removing a book
 function generateCards() {
@@ -215,6 +213,7 @@ function generateCards() {
 //-instead of hard-coding the modal in the HTML, have it injected via javascript
 
 function createCard(book) {
+    
     const CARD = document.createElement('div');
     CARD.classList.add('card');
 
