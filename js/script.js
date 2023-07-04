@@ -1,20 +1,9 @@
 const ADDBOOKBUTTON = document.querySelector("#addBook");
 ADDBOOKBUTTON.addEventListener('click', openModal);
 
-//Global scope so the value can be changed on each click
-const READCHECKBOX = document.querySelector('#read');
-READCHECKBOX.addEventListener('click', () => {
-    if(!READCHECKBOX.checked) {
-        READCHECKBOX.checked;
-        console.log("test output of checked attribute:" + READCHECKBOX.checked)
-    } else {
-        !READCHECKBOX.checked;
-        console.log("test output of checked attribute:" + READCHECKBOX.checked)
-    }
-})
+
 
 let myLibrary = [];
-setUpEventHandlers();
 
 addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
 addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
@@ -41,27 +30,96 @@ function Book(title, author, pages, read) {
     }
 }
 
-function openModal() {
-    const BOOKNAME = document.querySelector('#bookName');
-    const AUTHORNAME = document.querySelector('#authorName');
-    const PAGES = document.querySelector('#nrPages');
-    const READCHECKBOX = document.querySelector('#read');
-    const ERRORMESSAGE = document.querySelector('#error');
-    resetModalInput(BOOKNAME,AUTHORNAME,PAGES,READCHECKBOX,ERRORMESSAGE);
+//Modal changes - openModal() should do these things:
+    //trigger function to CREATE the modal elements, attributes..
+    //Seperate function to set up the event handlers, make sure it is only called once
+    //Have the modal elements removed when closed or submitted
+    //Make background unclickable when modal is opened
 
-    const BOOKMODAL = document.querySelector("#modal");
-    if(BOOKMODAL.style.display === '') {
-        BOOKMODAL.style.display = 'block';
-    } else {
-        BOOKMODAL.style.display = '';
-    }
+function createModal() {
+    const HTMLBODY = document.querySelector('body');
+    const MODALDIV = document.createElement('div');
+    MODALDIV.setAttribute('id',"modal");
+    HTMLBODY.appendChild(MODALDIV);
+
+    const CLOSEMODALICON = document.createElement('span');
+    CLOSEMODALICON.setAttribute('id', "closeButton");
+    CLOSEMODALICON.textContent = 'x';
+    MODALDIV.appendChild(CLOSEMODALICON);
+
+    const FORM = document.createElement('form');
+    MODALDIV.appendChild(FORM);
+    
+    const NAMELABEL = document.createElement('label');
+    NAMELABEL.setAttribute('for', "bookName");
+    NAMELABEL.textContent = "Book name: ";
+    FORM.appendChild(NAMELABEL);
+
+    const NAMEINPUT = document.createElement('input');
+    NAMEINPUT.setAttribute('type', "text");
+    NAMEINPUT.setAttribute('id', "bookName");
+    NAMEINPUT.setAttribute('name', "bookName");
+    FORM.appendChild(NAMEINPUT);
+
+    const AUTHORLABEL = document.createElement('label');
+    AUTHORLABEL.setAttribute('for', "authorName");
+    AUTHORLABEL.textContent = "Author name: ";
+    FORM.appendChild(AUTHORLABEL);
+
+    const AUTHORINPUT = document.createElement('input');
+    AUTHORINPUT.setAttribute('type', "text");
+    AUTHORINPUT.setAttribute('id', "authorName");
+    AUTHORINPUT.setAttribute('name', "authorName");
+    FORM.appendChild(AUTHORINPUT);
+
+    const PAGESLABEL = document.createElement('label');
+    PAGESLABEL.setAttribute('for', "nrPages");
+    PAGESLABEL.textContent = "Number of pages: ";
+    FORM.appendChild(PAGESLABEL);
+
+    const PAGESINPUT = document.createElement('input');
+    PAGESINPUT.setAttribute('type', "number");
+    PAGESINPUT.setAttribute('id', "nrPages");
+    PAGESINPUT.setAttribute('name', "nrPages");
+    FORM.appendChild(PAGESINPUT);
+
+    const READLABEL = document.createElement('label');
+    READLABEL.setAttribute('for', "read");
+    READLABEL.textContent = "Read?";
+    FORM.appendChild(READLABEL);
+
+    const READINPUT = document.createElement('input');
+    READINPUT.setAttribute('type', "checkbox");
+    READINPUT.setAttribute('id', "read");
+    READINPUT.setAttribute('name', "read");
+    READINPUT.setAttribute('value', false);
+    FORM.appendChild(READINPUT);
+
+    const ADDBUTTON = document.createElement('button');
+    ADDBUTTON.setAttribute('type', "button");
+    ADDBUTTON.setAttribute('id', "addButton");
+    ADDBUTTON.textContent = "Add to list";
+    FORM.appendChild(ADDBUTTON);
+
+    const ERRORMESSAGE = document.createElement('div');
+    ERRORMESSAGE.setAttribute('id', "error");
+    ERRORMESSAGE.textContent = "Please fill in all fields before submitting a book.";
+    FORM.appendChild(ERRORMESSAGE);
+
+}
+
+
+function openModal() {
+    createModal();
+    setUpEventHandlers();
+
 }
 
 function setUpEventHandlers() {
+    console.log("SetUpEventHandler function triggered")
     const BOOKNAME = document.querySelector('#bookName');
     const AUTHORNAME = document.querySelector('#authorName');
     const PAGES = document.querySelector('#nrPages');
-    const READCHECKBOX = document.querySelector('#read');
     const ERRORMESSAGE = document.querySelector('#error');
     const BOOKMODAL = document.querySelector("#modal");
 
@@ -74,20 +132,36 @@ function setUpEventHandlers() {
         const ADDBUTTON = document.querySelector('#addButton');
         ADDBUTTON.removeEventListener('click', addButtonEventHandler);
         ADDBUTTON.addEventListener('click', addButtonEventHandler);
+
+        //Checkbox
+        const READCHECKBOX = document.querySelector('#read');
+        READCHECKBOX.addEventListener('click', readCheckBoxEventHandler);
+
     
         function addButtonEventHandler() {
             createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE);
+            generateCards();
         }
     
         function closeButtonEventHandler() {
             closeModal(BOOKMODAL);
         }
+
+        function readCheckBoxEventHandler() {
+            if(!READCHECKBOX.checked) {
+                READCHECKBOX.checked;
+                console.log("test output of checked attribute:" + READCHECKBOX.checked)
+            } else {
+                !READCHECKBOX.checked;
+                console.log("test output of checked attribute:" + READCHECKBOX.checked)
+            }
+        }
 }
 
-//Issue with arrow function event listeners. 
+//Create a function to remove the cards (before regenerating)
 
 function closeModal(BOOKMODAL) {
-    BOOKMODAL.style.display = '';
+    BOOKMODAL.remove();
 }
 
 //Create Book object based on userinput
@@ -102,6 +176,7 @@ function createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERR
     }
 }
 
+//function below no longer used?
 function resetModalInput(BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
     BOOKNAME.value = '';
     AUTHORNAME.value = '';
@@ -214,3 +289,14 @@ function removeBook(bookToDelete, deleteButton) {
 }
 
 
+//Global scope so the value can be changed on each click
+// const READCHECKBOX = document.querySelector('#read');
+// READCHECKBOX.addEventListener('click', () => {
+//     if(!READCHECKBOX.checked) {
+//         READCHECKBOX.checked;
+//         console.log("test output of checked attribute:" + READCHECKBOX.checked)
+//     } else {
+//         !READCHECKBOX.checked;
+//         console.log("test output of checked attribute:" + READCHECKBOX.checked)
+//     }
+// })
