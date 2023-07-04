@@ -20,6 +20,9 @@ addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
 addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
 addBookToLibrary(new Book("How to train your dragon", "JRR T", 99, true));
 addBookToLibrary(new Book("Javascript for Dummies", "Bob", 875, false));
+addBookToLibrary(new Book("The Wizard of Larry", "Tom", 78, false));
+addBookToLibrary(new Book("How to train your dog", "JRR T", 99, true));
+addBookToLibrary(new Book("Javascript for Pros", "Bob", 875, false));
 generateCards();
 
 //Book object constructor
@@ -131,17 +134,18 @@ function generateCards() {
 }
 
 //Possible improvements:
-//-create a "parent" function that creates the cards while looping through the array of objects
-//-store the index of the object in the array as data-attribute in the HTML element
-//-whenever an element is removed, call this parent function again as it means indexes have shifted (so data-attributes have to be updated), make sure all existing elements are removed
+//-OK create a "parent" function that creates the cards while looping through the array of objects
+//-OK store the index of the object in the array as data-attribute in the HTML element
+//-OK whenever an element is removed, call this parent function again as it means indexes have shifted (so data-attributes have to be updated), make sure all existing elements are removed
 //-instead of hard-coding the modal in the HTML, have it injected via javascript
 
 function createCard(book) {
-    const INDEX = myLibrary.indexOf(book);
-    console.log(book.title + " can be found at index: " + INDEX);
-
     const CARD = document.createElement('div');
     CARD.classList.add('card');
+
+    const INDEX = myLibrary.indexOf(book);
+    // console.log(book.title + " can be found at index: " + INDEX);
+    CARD.setAttribute('data-index', INDEX);
     
     const TITLE = document.createElement('p');
     TITLE.classList.add('title');
@@ -191,12 +195,20 @@ function changeReadStatus(book, readButton) {
 }
 
 function removeBook(bookToDelete, deleteButton) {
+    //store the data-index attribute of the parent element (card)
+    const index = deleteButton.parentElement.getAttribute('data-index');
     for(let i = 0; i < myLibrary.length; i++) {
-        if(myLibrary[i].title === bookToDelete.title) {
+        if(i.toString() === index) {
             //splice allows you to pass the index of which you want to remove the item, + the amount of items
-            deleteButton.parentElement.remove();
             myLibrary.splice(i,1);
             console.log(bookToDelete.title + " has been removed");
+            
+            //remove all cards + generate again
+            const collectionElement = document.querySelector('#bookCollection');
+            while(collectionElement.firstChild) {
+                collectionElement.removeChild(collectionElement.firstChild);
+            }
+            generateCards();
         }
     }
 }
