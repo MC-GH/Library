@@ -1,8 +1,6 @@
 const ADDBOOKBUTTON = document.querySelector("#addBook");
 ADDBOOKBUTTON.addEventListener('click', openModal);
 
-
-
 let myLibrary = [];
 
 addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
@@ -28,12 +26,6 @@ function Book(title, author, pages, read) {
         return info;
     }
 }
-
-//Modal changes - openModal() should do these things:
-    //trigger function to CREATE the modal elements, attributes..
-    //Seperate function to set up the event handlers, make sure it is only called once
-    //Have the modal elements removed when closed or submitted
-    //Make background unclickable when modal is opened
 
 function createModal() {
     const HTMLBODY = document.querySelector('body');
@@ -175,16 +167,6 @@ function createNewBook(BOOKMODAL, BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERR
     }
 }
 
-//function below no longer used?
-function resetModalInput(BOOKNAME, AUTHORNAME, PAGES, READCHECKBOX, ERRORMESSAGE) {
-    BOOKNAME.value = '';
-    AUTHORNAME.value = '';
-    PAGES.value = '';
-    READCHECKBOX.checked = false;
-    console.log("reset function triggered");
-    ERRORMESSAGE.style.display = 'none';
-} 
-
 function addBookToLibrary(newBook) {
     //Add the newly created book (based on userInput) to the array
     //loop through the Array, and display each Book object on the page
@@ -205,12 +187,6 @@ function addBookToLibrary(newBook) {
 function generateCards() {
     myLibrary.forEach(book => createCard(book));
 }
-
-//Possible improvements:
-//-OK create a "parent" function that creates the cards while looping through the array of objects
-//-OK store the index of the object in the array as data-attribute in the HTML element
-//-OK whenever an element is removed, call this parent function again as it means indexes have shifted (so data-attributes have to be updated), make sure all existing elements are removed
-//-instead of hard-coding the modal in the HTML, have it injected via javascript
 
 function createCard(book) {
     
@@ -286,16 +262,3 @@ function removeBook(bookToDelete, deleteButton) {
         }
     }
 }
-
-
-//Global scope so the value can be changed on each click
-// const READCHECKBOX = document.querySelector('#read');
-// READCHECKBOX.addEventListener('click', () => {
-//     if(!READCHECKBOX.checked) {
-//         READCHECKBOX.checked;
-//         console.log("test output of checked attribute:" + READCHECKBOX.checked)
-//     } else {
-//         !READCHECKBOX.checked;
-//         console.log("test output of checked attribute:" + READCHECKBOX.checked)
-//     }
-// })
