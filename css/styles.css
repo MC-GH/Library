@@ -1,15 +1,11 @@
 :root {
     /*place common colors, paddings,.. here*/
-    --light-green: #55efc4;
-    --faded-green: #81ecec;
     --blue: #74b9ff;
-    --purple: #a29bfe;
     --light-grey: #dfe6e9;
     --dark-grey: #b2bec3;
     --dark-green: #00b894;
     --faded-blue: #00cec9;
     --dark-blue: #0984e3;
-    --dark-purple: #6c5ce7;
 }
 
 * {
@@ -30,7 +26,6 @@ header {
     background-color: var(--dark-green);
     color: white;
     font-variant:small-caps;
-    border-bottom: 2px inset rgb(29, 151, 37);
     box-shadow: 5px 5px 15px var(--light-grey);
     display: flex;
     position: sticky;
@@ -39,7 +34,11 @@ header {
 }
 
 #addBook {
+    background-color: var(--faded-blue);
+}
 
+#addBook:hover {
+    background-color: var(--dark-blue);
 }
 
 button {
@@ -47,12 +46,17 @@ button {
     border-radius: 4px;
     width: 100px;
     padding: .3rem;
-    background-color: var(--faded-blue);
+    background-color: var(--dark-green);
     font-size: 1.1rem;
     font-weight: bold;
     font-variant: small-caps;
     color: white;
     text-shadow: 1px 1px var(--dark-grey);
+}
+
+button:hover {
+    background-color: var(--dark-blue);
+    cursor:pointer;
 }
 
 #modalBackground {
@@ -95,6 +99,10 @@ button {
     transition: transform 0.3s ease;
 }
 
+#read {
+    cursor: pointer;
+}
+
 form label, button {
     display: block;
 }
@@ -120,12 +128,9 @@ main {
 }
 
 .card {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-between; */
     width: 250px;
     height: 280px;
-    border: 1.5px solid var(--dark-green);
+    background-color: rgba(92, 223, 208, 0.226);
     border-radius: 5px;
     text-align: center;
     overflow: none;
