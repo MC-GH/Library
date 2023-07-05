@@ -33,7 +33,26 @@ header {
     border-bottom: 2px inset rgb(29, 151, 37);
     box-shadow: 5px 5px 15px var(--light-grey);
     display: flex;
+    position: sticky;
+    top: 0;
     justify-content: space-between;
+}
+
+#addBook {
+
+}
+
+button {
+    border: 0;
+    border-radius: 4px;
+    width: 100px;
+    padding: .3rem;
+    background-color: var(--faded-blue);
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-variant: small-caps;
+    color: white;
+    text-shadow: 1px 1px var(--dark-grey);
 }
 
 #modalBackground {
@@ -46,10 +65,12 @@ header {
 }
 
 #modal {
-    position: absolute;
+    /*Below 4 lines make sure the modal is always centered, also in mobile view*/
+    position: fixed;
     z-index: 3;
-    top: calc(50% - 200px);
-    left: calc(50% - 175px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     min-height: 400px;
     min-width: 350px;
     border: 3px solid var(--dark-green);
@@ -99,19 +120,41 @@ main {
 }
 
 .card {
-    min-width: 250px;
-    padding: 2rem;
-    border: 1px solid var(--dark-green);
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between; */
+    width: 250px;
+    height: 280px;
+    border: 1.5px solid var(--dark-green);
     border-radius: 5px;
     text-align: center;
+    overflow: none;
+    box-shadow: 2px 2px 5px var(--light-grey);
+}
+
+.card-top {
+    padding: 1.5rem;
+    background-color: rgba(92, 223, 208, 0.226);
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-bottom {
+    padding: .5rem 1.5rem 1.5rem 1.5rem;
+}
+
+.title {
+    font-weight: bolder;
+    font-size: 1.2rem;
 }
 
 /*center the buttons*/
-.card p, .card button {
-    margin: 0.5rem auto;
+.card p {
+    margin: 0.1rem auto;
 }
 
-button {
-    width: 100px;
-    padding: .3rem;
+.card button {
+    margin: 0.5rem auto;
 }

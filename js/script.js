@@ -196,6 +196,9 @@ function createCard(book) {
     const INDEX = myLibrary.indexOf(book);
     // console.log(book.title + " can be found at index: " + INDEX);
     CARD.setAttribute('data-index', INDEX);
+
+    const CARDTOP = document.createElement('div');
+    CARDTOP.classList.add('card-top');
     
     const TITLE = document.createElement('p');
     TITLE.classList.add('title');
@@ -208,6 +211,9 @@ function createCard(book) {
     const PAGES = document.createElement('p');
     PAGES.classList.add('pages');
     PAGES.textContent = book.pages;
+
+    const CARDBOTTOM = document.createElement('div');
+    CARDBOTTOM.classList.add('card-bottom');
 
     const READBUTTON = document.createElement('button');
     READBUTTON.classList.add('readButton');
@@ -228,12 +234,14 @@ function createCard(book) {
     REMOVEBUTTON.addEventListener('click', () => {
         removeBook(book, REMOVEBUTTON );
     })
-
-    CARD.appendChild(TITLE);
-    CARD.appendChild(AUTHOR);
-    CARD.appendChild(PAGES);
-    CARD.appendChild(READBUTTON);
-    CARD.appendChild(REMOVEBUTTON);
+    
+    CARD.appendChild(CARDTOP);
+    CARDTOP.appendChild(TITLE);
+    CARDTOP.appendChild(AUTHOR);
+    CARDTOP.appendChild(PAGES);
+    CARD.appendChild(CARDBOTTOM);
+    CARDBOTTOM.appendChild(READBUTTON);
+    CARDBOTTOM.appendChild(REMOVEBUTTON);
 
     const COLLECTION = document.querySelector('#bookCollection'); 
     COLLECTION.appendChild(CARD);
@@ -246,7 +254,7 @@ function changeReadStatus(book, readButton) {
 
 function removeBook(bookToDelete, deleteButton) {
     //store the data-index attribute of the parent element (card)
-    const index = deleteButton.parentElement.getAttribute('data-index');
+    const index = deleteButton.parentElement.parentElement.getAttribute('data-index');
     for(let i = 0; i < myLibrary.length; i++) {
         if(i.toString() === index) {
             //splice allows you to pass the index of which you want to remove the item, + the amount of items
