@@ -3,6 +3,25 @@ ADDBOOKBUTTON.addEventListener('click', openModal);
 
 let myLibrary = [];
 
+//Book object class
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.info = function () {
+            let info = this.title + " by " + this.author + ", " + pages + " pages, ";
+            if (read) {
+                info += "read";
+            } else {
+                info += "not read yet";
+            };
+            return info;
+        };
+    }
+}
+
 addBookToLibrary(new Book("The hobbit", "JRR T", 578, true));
 addBookToLibrary(new Book("The Wizard of Ozz", "Tom", 78, false));
 addBookToLibrary(new Book("How to train your dragon", "JRR T", 99, true));
@@ -10,22 +29,6 @@ addBookToLibrary(new Book("Javascript for Dummies", "Bob", 875, false));
 addBookToLibrary(new Book("The Wizard of Larry", "Tom", 78, false));
 addBookToLibrary(new Book("How to train your dog", "JRR T", 99, true));
 addBookToLibrary(new Book("Javascript for Pros", "Bob", 875, false));
-
-//Book object constructor
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.info = function() {
-        let info = this.title + " by " + this.author + ", " + pages + " pages, ";
-        if(read) { info += "read";
-        } else {
-            info += "not read yet";
-        };
-        return info;
-    }
-}
 
 function createModal() {
     const HTMLBODY = document.querySelector('body');
